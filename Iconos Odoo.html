@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODOO ICONS · Selector</title>
+<script>
+(function(){
+  const s=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%2307111F'/><rect x='3' y='3' width='26' height='26' rx='4' fill='none' stroke='%23378ADD' stroke-width='1'/><circle cx='16' cy='12' r='5' fill='none' stroke='%23378ADD' stroke-width='1.5'/><rect x='8' y='20' width='16' height='2' rx='1' fill='%2385B7EB'/><circle cx='22' cy='22' r='4' fill='%235DCAA5'/><polyline points='20,22 21.5,23.5 24,21' fill='none' stroke='%2307111F' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>`;
+  const l=document.createElement('link');l.rel='icon';l.type='image/svg+xml';
+  l.href='data:image/svg+xml,'+s;document.head.appendChild(l);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#07111F;--bg1:#0B1929;--bg2:#0F2035;--bg3:#162844;
+  --line:#1E3D5C;--line2:#2A5080;
+  --b0:#378ADD;--b1:#85B7EB;--b2:#B5D4F4;--b3:#E6F1FB;
+  --cyan:#5DCAA5;--amber:#EF9F27;--red:#E24B4A;
+  --t0:#D6E8F7;--t1:#7AAFD4;--t2:#3F6E99;
+  --mono:'Share Tech Mono',monospace;--sans:'Barlow',sans-serif;
+}
+body{background:var(--bg0);color:var(--t0);font-family:var(--mono);min-height:100vh;padding:1.25rem 1rem}
+.app{max-width:1100px;margin:0 auto}
+
+/* HEADER */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
+.topbar-l{display:flex;align-items:center;gap:12px}
+.hicon{width:28px;height:28px;flex-shrink:0}
+.sysid{font-size:9px;letter-spacing:.15em;color:var(--t2);text-transform:uppercase}
+.sysname{font-size:17px;font-weight:300;color:var(--b3);font-family:var(--sans)}
+.sysname b{color:var(--b0);font-weight:600}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--cyan);display:inline-block;margin-right:5px}
+.stxt{font-size:9px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase}
+
+/* PANEL */
+.panel{background:var(--bg1);border:1px solid var(--line);border-radius:4px;margin-bottom:10px;overflow:hidden}
+.phdr{background:var(--bg2);padding:6px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
+.pbar{width:3px;height:13px;background:var(--b0);border-radius:1px;flex-shrink:0}
+.ptxt{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--t1)}
+.pbody{padding:12px 14px}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.tl{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tr{display:flex;gap:8px;align-items:center}
+.counter{font-size:9px;color:var(--t2);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.counter b{color:var(--b0)}
+
+/* SEARCH */
+.srch{position:relative}
+.srch input{background:var(--bg0);border:1px solid var(--line2);border-radius:3px;padding:6px 8px 6px 26px;font-size:11px;font-family:var(--mono);color:var(--t0);outline:none;width:200px;transition:border-color .15s}
+.srch input:focus{border-color:var(--b0)}
+.srch input::placeholder{color:var(--t2)}
+.srch-ic{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--t2);pointer-events:none}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:3px;font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--t1);transition:all .15s;white-space:nowrap}
+.btn:hover{border-color:var(--b0);color:var(--b0);background:rgba(55,138,221,.08)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+.btn-p{background:var(--b0);color:var(--bg0);border-color:var(--b0);font-weight:600}
+.btn-p:hover{background:var(--b1);border-color:var(--b1);color:var(--bg0)}
+.btn-a{border-style:dashed;color:var(--t2)}
+.btn-a:hover{border-style:solid;border-color:var(--cyan);color:var(--cyan)}
+.btn-warn{border-color:var(--amber);color:var(--amber)}
+.btn-warn:hover{background:rgba(239,159,39,.1)}
+
+/* DROP ZONE */
+.dropzone{border:1px dashed var(--line2);border-radius:4px;padding:20px;text-align:center;color:var(--t2);font-size:10px;letter-spacing:.08em;transition:all .2s;cursor:pointer;margin-bottom:6px}
+.dropzone:hover,.dropzone.drag{border-color:var(--b0);color:var(--b0);background:rgba(55,138,221,.05)}
+.dropzone-txt{margin-bottom:6px;text-transform:uppercase}
+.dropzone-sub{font-size:9px;color:var(--t2)}
+
+/* FILE INPUT */
+.file-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* GRID */
+.icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+
+/* CARD */
+.card{background:var(--bg1);border:1px solid var(--line);border-radius:4px;padding:12px 8px;cursor:pointer;transition:border-color .12s,background .12s;position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;user-select:none}
+.card:hover{border-color:var(--line2);background:var(--bg2)}
+.card.sel{border-color:var(--b0);background:rgba(55,138,221,.07)}
+.card.sel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b0);border-radius:3px 3px 0 0}
+.chk{position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:2px;border:1px solid var(--line2);background:var(--bg0);display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .12s}
+.card.sel .chk{background:var(--b0);border-color:var(--b0);color:var(--bg0)}
+.cimg{width:56px;height:56px;border-radius:5px;object-fit:contain;background:var(--bg2);padding:5px;border:1px solid var(--line)}
+.cnombre{font-size:10px;color:var(--t0);text-align:center;line-height:1.3;word-break:break-word}
+.ctecnico{font-size:8px;color:var(--t2);text-align:center;letter-spacing:.04em;word-break:break-all}
+
+/* PAGINATION */
+.pag{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+.pag-btn{padding:4px 10px;font-size:9px}
+.pag-info{font-size:9px;color:var(--t2);letter-spacing:.06em}
+.pag-nums{display:flex;gap:4px}
+.pag-n{padding:3px 8px;border-radius:2px;font-size:9px;font-family:var(--mono);cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--t1);transition:all .12s}
+.pag-n:hover{border-color:var(--b0);color:var(--b0)}
+.pag-n.active{background:var(--b0);border-color:var(--b0);color:var(--bg0);font-weight:600}
+
+/* LOADING */
+.loading{text-align:center;padding:3rem;color:var(--t2);font-size:11px}
+.loading-dot{display:inline-block;animation:blink 1s step-end infinite}
+.loading-dot:nth-child(2){animation-delay:.2s}
+.loading-dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:0}50%{opacity:1}}
+
+/* PROGRESS */
+.prog-bar{display:none;align-items:center;gap:8px;padding:6px 0;font-size:9px;color:var(--cyan);letter-spacing:.06em}
+.prog-bar.vis{display:flex}
+.prog-track{flex:1;height:2px;background:var(--line);border-radius:1px;overflow:hidden}
+.prog-fill{height:100%;background:var(--cyan);border-radius:1px;transition:width .3s}
+
+/* STATUS BAR */
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line);margin-top:8px;font-size:9px;color:var(--t2);letter-spacing:.06em;flex-wrap:wrap;gap:6px}
+.stat-item{display:flex;align-items:center;gap:5px}
+.stat-dot{width:5px;height:5px;border-radius:50%}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg2);border:1px solid var(--line2);border-radius:4px;padding:10px 16px;font-size:10px;color:var(--t0);letter-spacing:.06em;transform:translateY(60px);opacity:0;transition:all .25s;z-index:100;max-width:280px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{border-color:var(--cyan);color:var(--cyan)}
+.toast.err{border-color:var(--red);color:var(--red)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:2.5rem;color:var(--t2);font-size:11px}
+
+@media(max-width:580px){
+  .file-row{grid-template-columns:1fr}
+  .srch input{width:140px}
+  .icon-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="topbar">
+  <div class="topbar-l">
+    <svg class="hicon" viewBox="0 0 32 32"><rect width="32" height="32" rx="5" fill="#07111F"/><rect x="3" y="3" width="26" height="26" rx="4" fill="none" stroke="#378ADD" stroke-width="1"/><circle cx="16" cy="12" r="5" fill="none" stroke="#378ADD" stroke-width="1.5"/><rect x="8" y="20" width="16" height="2" rx="1" fill="#85B7EB"/><circle cx="22" cy="22" r="4" fill="#5DCAA5"/><polyline points="20,22 21.5,23.5 24,21" fill="none" stroke="#07111F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <div class="sysid">ODOO ASSETS · v2.0</div>
+      <div class="sysname">Selector de <b>Iconos</b></div>
+    </div>
+  </div>
+  <div><span class="sdot"></span><span class="stxt">Sistema activo</span></div>
+</div>
+
+<!-- CARGAR EXCEL -->
+<div class="panel">
+  <div class="phdr"><div class="pbar"></div><span class="ptxt">Fuente de datos · Excel</span></div>
+  <div class="pbody">
+    <div class="dropzone" id="dropXlsx" onclick="document.getElementById('fileXlsx').click()">
+      <div class="dropzone-txt">Arrastra el Excel aquí o pulsa para seleccionar</div>
+      <div class="dropzone-sub">Formato esperado: columnas "Nombre de módulo" · "Nombre técnico" · "Icono" (base64 PNG)</div>
+    </div>
+    <input type="file" id="fileXlsx" accept=".xlsx" style="display:none" onchange="cargarExcel(this.files[0])">
+    <div id="fuenteInfo" style="font-size:9px;color:var(--t2);letter-spacing:.06em;margin-top:4px"></div>
+  </div>
+</div>
+
+<!-- AÑADIR ICONOS NUEVOS -->
+<div class="panel">
+  <div class="phdr"><div class="pbar" style="background:var(--amber)"></div><span class="ptxt">Añadir iconos nuevos</span></div>
+  <div class="pbody">
+    <div class="file-row" style="margin-bottom:8px">
+      <div>
+        <div style="font-size:9px;color:var(--t2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Individual — un PNG</div>
+        <div class="dropzone" style="padding:12px" id="dropInd" onclick="document.getElementById('fileInd').click()">
+          <div class="dropzone-txt">Arrastra PNG(s) o pulsa</div>
+          <div class="dropzone-sub">Nombre del archivo = nombre técnico</div>
+        </div>
+        <input type="file" id="fileInd" accept="image/png" multiple style="display:none" onchange="cargarPNGs(this.files)">
+      </div>
+      <div>
+        <div style="font-size:9px;color:var(--t2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Masivo — Excel adicional</div>
+        <div class="dropzone" style="padding:12px" id="dropMas" onclick="document.getElementById('fileMas').click()">
+          <div class="dropzone-txt">Arrastra Excel adicional o pulsa</div>
+          <div class="dropzone-sub">Mismo formato que el principal</div>
+        </div>
+        <input type="file" id="fileMas" accept=".xlsx" style="display:none" onchange="cargarExcelAdicional(this.files[0])">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-warn" onclick="exportarExcel()">↓  Exportar Excel actualizado</button>
+      <span style="font-size:9px;color:var(--t2)">Descarga el catálogo completo con todos los iconos añadidos</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="tl">
+    <button class="btn" onclick="selAll()">Sel. todo</button>
+    <button class="btn" onclick="deselAll()">Deseleccionar</button>
+    <div class="srch"><span class="srch-ic">⌕</span><input type="text" id="buscar" placeholder="Buscar..." oninput="filtrar()" autocomplete="off"></div>
+    <select id="sortSel" onchange="filtrar()" style="background:var(--bg0);border:1px solid var(--line2);border-radius:3px;padding:5px 8px;font-size:10px;font-family:var(--mono);color:var(--t1);outline:none;cursor:pointer">
+      <option value="nombre">Ordenar: Nombre</option>
+      <option value="tecnico">Ordenar: Técnico</option>
+    </select>
+  </div>
+  <div class="tr">
+    <span class="counter">Sel: <b id="cntSel">0</b> · Total: <b id="cntTot">0</b></span>
+    <button class="btn btn-p" id="btnDl" onclick="descargar()" disabled>↓  Descargar PNG</button>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-bar" id="progBar">
+  <span id="progTxt">Cargando...</span>
+  <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  <span id="progPct">0%</span>
+</div>
+
+<!-- GRID -->
+<div id="gridWrap">
+  <div class="empty-state">Carga el archivo Excel para comenzar</div>
+</div>
+
+<!-- PAGINACIÓN -->
+<div class="pag" id="pagWrap" style="display:none"></div>
+
+<!-- STATUS BAR -->
+<div class="statusbar">
+  <div class="stat-item"><div class="stat-dot" style="background:var(--cyan)"></div><span id="statIconos">0 iconos cargados</span></div>
+  <div class="stat-item"><div class="stat-dot" style="background:var(--b0)"></div><span id="statPag">—</span></div>
+  <div class="stat-item"><span id="statFuente">Sin fuente</span></div>
+</div>
+
+</div><!-- /app -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATOS ────────────────────────────────────────────────────────────────
+let TODOS = [];          // [{nombre, tecnico, b64}, ...]
+let FILTRADOS = [];      // subset según búsqueda/orden
+let SELECCIONADOS = new Set();
+let PAGINA = 1;
+const POR_PAGINA = 60;
+
+// ─── EXCEL PRINCIPAL ──────────────────────────────────────────────────────
+function cargarExcel(file) {
+  if (!file) return;
+  mostrarProg('Leyendo Excel...', 10);
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const filas = XLSX.utils.sheet_to_json(ws, {header:1});
+      const datos = [];
+      for (let i = 1; i < filas.length; i++) {
+        const f = filas[i];
+        if (f[0] && f[1] && f[2]) datos.push({nombre:String(f[0]), tecnico:String(f[1]), b64:String(f[2])});
+      }
+      if (!datos.length) { toast('El Excel no contiene datos válidos', 'err'); ocultarProg(); return; }
+      TODOS = datos;
+      SELECCIONADOS.clear();
+      document.getElementById('fuenteInfo').textContent = `✓  ${file.name}  ·  ${datos.length} iconos cargados`;
+      document.getElementById('statFuente').textContent = file.name;
+      mostrarProg('Renderizando...', 80);
+      setTimeout(() => { filtrar(); ocultarProg(); toast(`${datos.length} iconos cargados correctamente`, 'ok'); }, 100);
+    } catch(err) { toast('Error al leer el Excel: ' + err.message, 'err'); ocultarProg(); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ─── EXCEL ADICIONAL (FUSIÓN) ─────────────────────────────────────────────
+function cargarExcelAdicional(file) {
+  if (!file) return;
+  mostrarProg('Fusionando Excel...', 20);
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const filas = XLSX.utils.sheet_to_json(ws, {header:1});
+      let nuevos = 0, actualizados = 0;
+      for (let i = 1; i < filas.length; i++) {
+        const f = filas[i];
+        if (!f[0]||!f[1]||!f[2]) continue;
+        const idx = TODOS.findIndex(x => x.tecnico === String(f[1]));
+        if (idx >= 0) { TODOS[idx] = {nombre:String(f[0]),tecnico:String(f[1]),b64:String(f[2])}; actualizados++; }
+        else { TODOS.push({nombre:String(f[0]),tecnico:String(f[1]),b64:String(f[2])}); nuevos++; }
+      }
+      filtrar(); ocultarProg();
+      toast(`Fusionado: +${nuevos} nuevos, ${actualizados} actualizados`, 'ok');
+    } catch(err) { toast('Error: ' + err.message, 'err'); ocultarProg(); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ─── AÑADIR PNGs INDIVIDUALES ─────────────────────────────────────────────
+function cargarPNGs(files) {
+  if (!files || !files.length) return;
+  let procesados = 0;
+  const total = files.length;
+  Array.from(files).forEach(file => {
+    const nombre_tecnico = file.name.replace(/\.png$/i, '');
+    const reader = new FileReader();
+    reader.onload = e => {
+      const b64 = e.target.result.split(',')[1];
+      const idx = TODOS.findIndex(x => x.tecnico === nombre_tecnico);
+      if (idx >= 0) TODOS[idx].b64 = b64;
+      else TODOS.push({nombre: nombre_tecnico, tecnico: nombre_tecnico, b64});
+      procesados++;
+      if (procesados === total) {
+        filtrar();
+        toast(`${total} PNG(s) añadido(s)`, 'ok');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ─── EXPORTAR EXCEL ───────────────────────────────────────────────────────
+function exportarExcel() {
+  if (!TODOS.length) { toast('No hay iconos para exportar', 'err'); return; }
+  mostrarProg('Generando Excel...', 30);
+  setTimeout(() => {
+    const wb = XLSX.utils.book_new();
+    const hdr = [['Nombre de módulo','Nombre técnico','Icono']];
+    const filas = TODOS.map(ic => [ic.nombre, ic.tecnico, ic.b64]);
+    const ws = XLSX.utils.aoa_to_sheet([...hdr, ...filas]);
+    ws['!cols'] = [{wch:25},{wch:30},{wch:20}];
+    XLSX.utils.book_append_sheet(wb, ws, 'Iconos');
+    XLSX.writeFile(wb, 'iconos_odoo_actualizado.xlsx');
+    ocultarProg();
+    toast('Excel exportado correctamente', 'ok');
+  }, 200);
+}
+
+// ─── FILTRAR / ORDENAR ────────────────────────────────────────────────────
+function filtrar() {
+  const q = document.getElementById('buscar').value.toLowerCase();
+  const ord = document.getElementById('sortSel').value;
+  FILTRADOS = TODOS.filter(ic =>
+    ic.nombre.toLowerCase().includes(q) || ic.tecnico.toLowerCase().includes(q)
+  ).sort((a,b) => a[ord].localeCompare(b[ord]));
+  PAGINA = 1;
+  renderGrid();
+  renderPag();
+  actualizarStatus();
+}
+
+// ─── RENDER GRID ──────────────────────────────────────────────────────────
+function renderGrid() {
+  const wrap = document.getElementById('gridWrap');
+  if (!FILTRADOS.length) {
+    wrap.innerHTML = '<div class="empty-state">' + (TODOS.length ? 'No se encontraron iconos con ese criterio' : 'Carga el archivo Excel para comenzar') + '</div>';
+    return;
+  }
+  const inicio = (PAGINA-1)*POR_PAGINA;
+  const pagina = FILTRADOS.slice(inicio, inicio+POR_PAGINA);
+  const grid = document.createElement('div');
+  grid.className = 'icon-grid';
+  pagina.forEach(ic => {
+    const sel = SELECCIONADOS.has(ic.tecnico);
+    const div = document.createElement('div');
+    div.className = 'card' + (sel?' sel':'');
+    div.dataset.t = ic.tecnico;
+    div.innerHTML =
+      '<div class="chk">'+(sel?'✓':'')+'</div>'+
+      '<img class="cimg" src="data:image/png;base64,'+ic.b64+'" alt="'+ic.nombre+'" loading="lazy">'+
+      '<div class="cnombre">'+ic.nombre+'</div>'+
+      '<div class="ctecnico">'+ic.tecnico+'</div>';
+    div.addEventListener('click', () => toggle(ic.tecnico));
+    grid.appendChild(div);
+  });
+  wrap.innerHTML = '';
+  wrap.appendChild(grid);
+}
+
+// ─── PAGINACIÓN ───────────────────────────────────────────────────────────
+function renderPag() {
+  const wrap = document.getElementById('pagWrap');
+  const total = Math.ceil(FILTRADOS.length / POR_PAGINA);
+  if (total <= 1) { wrap.style.display='none'; return; }
+  wrap.style.display = 'flex';
+
+  // Páginas visibles: máx 7 alrededor de la actual
+  const pages = [];
+  const delta = 3;
+  for (let p = Math.max(1,PAGINA-delta); p <= Math.min(total,PAGINA+delta); p++) pages.push(p);
+
+  let html = '<button class="btn pag-btn" onclick="irPag('+(PAGINA-1)+')" '+(PAGINA===1?'disabled':'')+'>‹ Ant</button>';
+  if (pages[0] > 1) html += '<span class="pag-info">1…</span>';
+  pages.forEach(p => html += '<button class="pag-n'+(p===PAGINA?' active':'')+'" onclick="irPag('+p+')">'+p+'</button>');
+  if (pages[pages.length-1] < total) html += '<span class="pag-info">…'+total+'</span>';
+  html += '<button class="btn pag-btn" onclick="irPag('+(PAGINA+1)+')" '+(PAGINA===total?'disabled':'')+'>Sig ›</button>';
+  html += '<span class="pag-info">Página '+PAGINA+' de '+total+'</span>';
+  wrap.innerHTML = html;
+}
+
+function irPag(p) {
+  const total = Math.ceil(FILTRADOS.length / POR_PAGINA);
+  if (p < 1 || p > total) return;
+  PAGINA = p;
+  renderGrid();
+  renderPag();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── SELECCIÓN ────────────────────────────────────────────────────────────
+function toggle(tecnico) {
+  if (SELECCIONADOS.has(tecnico)) SELECCIONADOS.delete(tecnico);
+  else SELECCIONADOS.add(tecnico);
+  // Solo re-renderizar la tarjeta afectada
+  const card = document.querySelector('.card[data-t="'+tecnico+'"]');
+  if (card) {
+    const sel = SELECCIONADOS.has(tecnico);
+    card.className = 'card'+(sel?' sel':'');
+    card.querySelector('.chk').textContent = sel?'✓':'';
+  }
+  actualizarStatus();
+}
+
+function selAll() {
+  FILTRADOS.forEach(ic => SELECCIONADOS.add(ic.tecnico));
+  renderGrid(); actualizarStatus();
+}
+function deselAll() {
+  SELECCIONADOS.clear();
+  renderGrid(); actualizarStatus();
+}
+
+// ─── DESCARGA ─────────────────────────────────────────────────────────────
+async function descargar() {
+  const lista = TODOS.filter(ic => SELECCIONADOS.has(ic.tecnico));
+  if (!lista.length) return;
+  mostrarProg('Descargando 0 de '+lista.length+'...', 0);
+  for (let i=0; i<lista.length; i++) {
+    const ic = lista[i];
+    const pct = Math.round((i+1)/lista.length*100);
+    setProg('Descargando '+ic.nombre+'...', pct);
+    const a = document.createElement('a');
+    a.href = 'data:image/png;base64,'+ic.b64;
+    a.download = ic.tecnico+'.png';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    await new Promise(r => setTimeout(r, 350));
+  }
+  ocultarProg();
+  toast('✓  '+lista.length+' archivo(s) descargados', 'ok');
+}
+
+// ─── STATUS ───────────────────────────────────────────────────────────────
+function actualizarStatus() {
+  document.getElementById('cntSel').textContent = SELECCIONADOS.size;
+  document.getElementById('cntTot').textContent = FILTRADOS.length + (FILTRADOS.length !== TODOS.length ? ' / '+TODOS.length : '');
+  document.getElementById('btnDl').disabled = SELECCIONADOS.size === 0;
+  document.getElementById('statIconos').textContent = TODOS.length+' iconos en catálogo';
+  const pags = Math.ceil(FILTRADOS.length/POR_PAGINA);
+  document.getElementById('statPag').textContent = pags > 1 ? 'Pág '+PAGINA+' de '+pags : FILTRADOS.length+' resultados';
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────
+function mostrarProg(msg, pct) {
+  document.getElementById('progBar').classList.add('vis');
+  document.getElementById('progTxt').textContent = msg;
+  document.getElementById('progFill').style.width = pct+'%';
+  document.getElementById('progPct').textContent = pct+'%';
+}
+function setProg(msg, pct) {
+  document.getElementById('progTxt').textContent = msg;
+  document.getElementById('progFill').style.width = pct+'%';
+  document.getElementById('progPct').textContent = pct+'%';
+}
+function ocultarProg() {
+  setTimeout(() => document.getElementById('progBar').classList.remove('vis'), 600);
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────
+function toast(msg, tipo) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show'+(tipo?' '+tipo:'');
+  clearTimeout(t._to);
+  t._to = setTimeout(() => t.className='toast', 3500);
+}
+
+// ─── DRAG & DROP ──────────────────────────────────────────────────────────
+function setupDrop(zoneId, handler) {
+  const z = document.getElementById(zoneId);
+  z.addEventListener('dragover', e => { e.preventDefault(); z.classList.add('drag'); });
+  z.addEventListener('dragleave', () => z.classList.remove('drag'));
+  z.addEventListener('drop', e => {
+    e.preventDefault(); z.classList.remove('drag');
+    handler(e.dataTransfer.files);
+  });
+}
+setupDrop('dropXlsx', files => { if(files[0]) cargarExcel(files[0]); });
+setupDrop('dropInd',  files => cargarPNGs(files));
+setupDrop('dropMas',  files => { if(files[0]) cargarExcelAdicional(files[0]); });
+
+actualizarStatus();
+</script>
+</body>
+</html>
